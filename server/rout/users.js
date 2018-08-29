@@ -1,6 +1,4 @@
-const	express = require("express"),
-		router = express.Router({mergeParams: true}),
-		users= require("../models/users");
+const users= require("../models/users");
 
 router.get("/data2", function(req, res){
 	if(req.query.sort){
