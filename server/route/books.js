@@ -1,7 +1,6 @@
-import { books } from "../models/books";
+const books = require ("../models/books");
 
 let booksData = {
-
 	saveData(req, res){
 		books.findByIdAndUpdate(req.body._id, req.body, function(err){
 			if(err){
@@ -42,5 +41,4 @@ let booksData = {
 		});
 	}	
 };
-
-export default booksData;
+module.exports = booksData;

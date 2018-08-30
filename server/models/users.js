@@ -4,8 +4,7 @@ let usersSchema = new mongoose.Schema({
 	FirstName: String,
 	LastName: String,
 	Phone: String,
-	Job: String,
-	Started: {type: Date, default: Date.now}
+	Job: String
 });
 
 module.exports = mongoose.model("users", usersSchema);

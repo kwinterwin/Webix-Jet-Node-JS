@@ -3,11 +3,12 @@ import {genres} from "models/genres";
 import {books} from "models/books";
 import WindowEdit from "views/window";
 
-export default class DataTable extends JetView{
+export default class DataTableBook extends JetView{
 	config(){
 	
 		let header =  { 
 			view: "toolbar",
+			name:"dataset A",
 			elements: [
 				{ view: "label", label: ""},
 				{

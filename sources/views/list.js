@@ -1,18 +1,19 @@
 import {JetView} from "webix-jet";
 import {genres} from "models/genres";
+import {books} from "models/books";
 
 export default class DataTable extends JetView{
 	config(){
-	
 
 		let list = {
 			view:"list",
+			localId:"list",
 			select:true,
 			on:{
 				onAfterSelect: ()=> {
-					this.getRoot().queryView({view:"datatable"}).filter((data)=>{
-						let values = this.getRoot().queryView({view:"list"}).getSelectedItem();
-						return data.category == values.id;
+					this.$$("datatable").filter((data)=>{
+						let values = this.$$("list").getSelectedItem();
+						return data.Category == values.id;
 					});
 				}
 			}
@@ -20,6 +21,7 @@ export default class DataTable extends JetView{
 
 		let datatable = {
 			view: "datatable",
+			localId:"datatable",
 			datatype:"json",
 			select:true,
 			editable:true,
@@ -27,51 +29,49 @@ export default class DataTable extends JetView{
 			editaction:"dblclick",
 			columns:[
 				{id:"Name", editor:"text", header:"Name",fillspace:2},
-				{id:"year", editor:"text", header:"Year",fillspace:1},
-				{id:"author", editor:"text", header:"Some information",fillspace:2},
-				{id:"category", editor:"combo", header:"Category", options:genres, fillspace:1},
+				{id:"Year", editor:"text", header:"Year",fillspace:1},
+				{id:"Author", editor:"text", header:"Author",fillspace:2},
+				{id:"Category", editor:"combo", header:"Category", options:genres, fillspace:1},
 			],
 			on:{
 				onAfterEditStop:()=>{
-					let datatable = this.getRoot().queryView({view:"datatable"});
-					let values = datatable.getSelectedItem();
-					datatable.updateItem(values.id, values);
-					this.getRoot().queryView({view:"template", name:"review"}).setValues(values);
+					let values = this.$$("datatable").getSelectedItem();
+					this.$$("template").setValues(values);
 				},
 				onAfterSelect: ()=> {
-					let values = this.getRoot().queryView({view:"datatable"}).getSelectedItem();
-					this.getRoot().queryView({view:"template", name:"review"}).setValues(values);
+					let values = this.$$("datatable").getSelectedItem();
+					this.$$("template").show();
+					this.$$("template").setValues(values);
 				}
 			}
 		};
 
-		let templ = (data) =>{
-			let category = data.category; 
-			return `
-				<section>
-					<div><h2>${data.Name || "empty"}</h2></div>
-					<div>Year: ${data.year || "empty"}</div>
-					<div>Author: ${data.author || "empty"}</div>
-					<div>Category: ${category ? genres.getItem(category).value : "empty"}</div>
-					<article>About: ${data.text || "empty"}</article>
-				</section>
-			`;
-		};
-
-		let form =
-		{	
+		let template = {	
 			view:"template",
-			name:"review",
 			gravity:3,
-			template:templ,
+			hidden:true,
+			localId:"template",
+			template:(obj)=>{
+				let category = "";
+				if(typeof genres.getItem(obj.Category) != "undefined")
+					category = genres.getItem(obj.Category).value;
+				return `
+				<div>
+					<div><h2>${obj.Name}</h2></div>
+					<div>Year: ${obj.Year}</div>
+					<div>Author: ${obj.Author}</div>
+					<div>Category: ${category}</div>
+					<div>About: ${obj.Description}</div>
+				</div>
+			`;
+			}
 		};
 
-		return  {cols:[list, datatable, form]};
+		return  {cols:[list, datatable, template]};
 	}
-	
-	init(view){
-		view.queryView({view:"datatable"}).sync(data1);
-		view.queryView({view:"list"}).sync(genres);
+	init(){
+		this.$$("datatable").sync(books);
+		this.$$("list").sync(genres);
 	}
 }
 
