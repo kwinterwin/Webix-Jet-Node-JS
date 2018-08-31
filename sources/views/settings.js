@@ -74,6 +74,27 @@ export default class DataTable extends JetView{
 			]
 		};
 
+		let uploadServer = {
+			view: "button", 
+			label: "Upload to server",
+			click:()=>{
+				this.$$("upload").files.data.each((file)=>{
+					file.formData = {name:this.$$("select").getText()};
+					console.log(file);
+					this.$$("upload").send(file.id);
+				});
+				this.$$("img").hide();
+			}
+		};
+
+		let select = {
+			labelPosition: "top",
+			view:"richselect", 
+			label:"Please, select book for file", 
+			localId:"select",
+			options:{body:{template:"#Name#", data:books}}
+		};
+
 		let form = {
 			view:"form", localId:"form", rows: [
 				{ 
@@ -118,7 +139,9 @@ export default class DataTable extends JetView{
 					},
 					localId:"img",
 					hidden:true
-				}
+				}, 
+				select,
+				uploadServer
 			]
 		};
 
