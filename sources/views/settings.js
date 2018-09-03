@@ -79,7 +79,6 @@ export default class DataTable extends JetView{
 			label: "Upload to server",
 			click:()=>{
 				this.$$("upload").files.data.each((file)=>{
-					file.formData = {name:this.$$("select").getText()};
 					this.$$("upload").send(file.id);
 				});
 				this.$$("img").hide();
