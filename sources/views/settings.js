@@ -86,14 +86,6 @@ export default class DataTable extends JetView{
 			}
 		};
 
-		let select = {
-			labelPosition: "top",
-			view:"richselect", 
-			label:"Please, select book for file", 
-			localId:"select",
-			options:{body:{template:"#Name#", data:books}}
-		};
-
 		let form = {
 			view:"form", localId:"form", rows: [
 				{ 
@@ -143,7 +135,6 @@ export default class DataTable extends JetView{
 					localId:"img",
 					hidden:true
 				}, 
-				select,
 				uploadServer
 			]
 		};
