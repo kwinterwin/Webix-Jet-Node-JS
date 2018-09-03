@@ -4,7 +4,7 @@ const cors = require("cors");
 const express = require("express");
 const books = require("./server/route/books");
 const users = require("./server/route/users");
-const files = require("./server/route/files");
+const files = require("./server/models/files");
 
 let app = express();
 
@@ -12,8 +12,6 @@ let port = 3000;
 
 mongoose.connect("mongodb://localhost/task1DB");
 app.use(bodyParser.urlencoded({extended: true}));
-
-app.use("/uploads", express.static("uploads"));
 
 app.use(cors());
 
@@ -25,20 +23,30 @@ app.post("/books", books.addData);
 app.get("/users", users.showData);
 app.put("/users/:id", users.saveData);
 
-const multer = require("multer");
-		
-let storage = multer.diskStorage({
-	destination: function(req, file, cb){
-		cb(null, "./uploads/");
-	},
-	filename: function(req, file, cb){
-		cb(null, file.originalname);
-	}
-});
+const fileUpload = require("express-fileupload");
 
-let upload = multer({storage: storage});
-app.get("/files", files.showData);
-app.post("/files", upload.single("upload"), files.addData); 
+app.use(fileUpload());
+ 
+app.post("/files", function(req, res) {
+	
+	let sampleFile = req.files.upload;
+
+	sampleFile.mv("./uploads/" + sampleFile.name, function(err) {
+		if (err)
+			return res.status(500).send(err);
+	});
+
+	files.create({
+		fileName: req.files.upload.name,
+		type:     req.files.upload.mimetype
+	}, function(err){
+		if(err){
+			console.log("ERROR!");
+		} else{
+			res.json({});
+		}
+	});
+});
 
 app.listen(port, function(){
 	console.log("Started!");
