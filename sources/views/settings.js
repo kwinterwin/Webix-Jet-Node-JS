@@ -80,7 +80,6 @@ export default class DataTable extends JetView{
 			click:()=>{
 				this.$$("upload").files.data.each((file)=>{
 					file.formData = {name:this.$$("select").getText()};
-					console.log(file);
 					this.$$("upload").send(file.id);
 				});
 				this.$$("img").hide();
@@ -122,6 +121,10 @@ export default class DataTable extends JetView{
 							};    
 							reader.readAsDataURL(file);
 							return false;
+						}, 
+						onFileUpload:()=>{
+							webix.message({type:"info", text:"File is upload"});
+							this.$$("mylist").hide();
 						}
 					}
 				},

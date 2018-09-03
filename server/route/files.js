@@ -12,15 +12,12 @@ let filesData = {
 	},
 
 	addData(req, res){
-		console.log(req);
-		console.log(req.body);
-		console.log(req.file);
 		files.create({
-			filmName: req.body.name,
-			realName: req.file.originalname,
+			bookName: req.body.name,
+			fileName: req.file.originalname,
 			path:     req.file.path,
 			type:     req.file.mimetype
-		}, function(err, newFilm){
+		}, function(err){
 			if(err){
 				console.log("ERROR!");
 			} else{

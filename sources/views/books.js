@@ -21,6 +21,12 @@ export default class DataTableBook extends JetView{
 				{
 					view: "button", 
 					label: "Refresh",
+					click:()=>{
+						this.$$("datatable").filterByAll();
+						this.$$("datatable").filter(()=>{
+							return 1;
+						});
+					}
 				}
 			]
 		};
@@ -34,7 +40,7 @@ export default class DataTableBook extends JetView{
 			columns:[
 				{id:"Name", header: ["Name" ,{content:"textFilter"}], sort:"string",fillspace:2},
 				{id:"Year", header: ["Year" ,{content:"numberFilter"}], sort:"int",fillspace:2},
-				{id:"Author", header: ["Some information" ,{content:"textFilter"}], sort:"string",fillspace:1},
+				{id:"Author", header: ["Author" ,{content:"textFilter"}], sort:"string",fillspace:1},
 				{id:"Category", header: ["Category" ,{content:"selectFilter"}], sort:"string", options:genres,fillspace:1},
 			],
 			on:{
