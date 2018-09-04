@@ -28,9 +28,7 @@ const fileUpload = require("express-fileupload");
 app.use(fileUpload());
  
 app.post("/files", function(req, res) {
-	
 	let sampleFile = req.files.upload;
-
 	sampleFile.mv("./uploads/" + sampleFile.name, function(err) {
 		if (err)
 			return res.status(500).send(err);
@@ -41,13 +39,12 @@ app.post("/files", function(req, res) {
 		type:     req.files.upload.mimetype
 	}, function(err){
 		if(err){
-			console.log("ERROR!");
+			res.status(500).send(err);
 		} else{
 			res.json({});
 		}
 	});
+	
 });
 
-app.listen(port, function(){
-	console.log("Started!");
-});
+app.listen(port);

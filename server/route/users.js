@@ -5,7 +5,7 @@ let usersData = {
 		if(req.query.sort){
 			users.find({}).sort(req.query.sort).exec(function(err, data) {
 				if(err){
-					console.log("ERROR!");
+					res.status(500).send(err);
 				} else{
 					res.json(data);
 				}
@@ -21,7 +21,7 @@ let usersData = {
 			};
 			users.find(userFilter, function(err, data){
 				if(err){
-					console.log("ERROR!");
+					res.status(500).send(err);
 				} else{
 					res.json(data);
 				}
@@ -29,7 +29,7 @@ let usersData = {
 		} else {
 			users.find({}, function(err, data){
 				if(err){
-					console.log("ERROR!");
+					res.status(500).send(err);
 				} else {
 					if(req.query.start){
 						let info = {
@@ -52,7 +52,7 @@ let usersData = {
 	saveData(req, res){
 		users.findByIdAndUpdate(req.body._id, req.body, function(err){
 			if(err){
-				console.log("ERROR!");
+				res.status(500).send(err);
 			} else {
 				res.json({});
 			}

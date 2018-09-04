@@ -97,7 +97,6 @@ export default class DataTable extends JetView{
 					upload:"http://localhost:3000/files",
 					on:{
 						onAfterFileAdd:(upload)=>{
-							let file = upload.file;
 							let reader = new FileReader(); 
 							reader.onload = (event) => {
 								if(upload.file.type == "image/png" || upload.file.type == "image/gif" || upload.file.type == "image/jpeg"){
@@ -110,7 +109,6 @@ export default class DataTable extends JetView{
 									this.$$("img").hide();
 								}
 							};    
-							reader.readAsDataURL(file);
 							return false;
 						}, 
 						onFileUpload:()=>{
@@ -180,4 +178,3 @@ export default class DataTable extends JetView{
 		this.$$("datatable").sync(books);
 	}
 }
-
