@@ -2,7 +2,18 @@ const users= require("../models/users");
 
 let usersData = {
 	showData(req, res){
-		if(req.query.sort){
+		let userFilter;
+		if(req.query.filter){
+			let user = req.query.filter;
+			userFilter = {
+				FirstName: new RegExp(user.FirstName, "i"),
+				LastName: new RegExp(user.LastName, "i"),
+				Phone: new RegExp(user.Phone, "i"),
+				Job: new RegExp(user.Job, "i"),
+			};
+		}
+		else if(req.query.sort){
+			console.log("hjdfghjbdf");
 			users.find({}).sort(req.query.sort).exec(function(err, data) {
 				if(err){
 					console.log(err);
@@ -12,14 +23,7 @@ let usersData = {
 				}
 			});
 		}
-		else if(req.query.filter && req.query.start == 0){
-			let user = req.query.filter;
-			let userFilter = {
-				FirstName: new RegExp(user.FirstName, "i"),
-				LastName: new RegExp(user.LastName, "i"),
-				Phone: new RegExp(user.Phone, "i"),
-				Job: new RegExp(user.Job, "i"),
-			};
+		else if(req.query.filter){
 			users.find(userFilter, function(err, data){
 				if(err){
 					console.log(err);
@@ -28,7 +32,8 @@ let usersData = {
 					res.json(data);
 				}
 			});
-		} else {
+		} 		
+		else {
 			users.find({}, function(err, data){
 				if(err){
 					console.log(err);
