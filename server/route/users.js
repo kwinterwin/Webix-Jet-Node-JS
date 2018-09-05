@@ -5,6 +5,7 @@ let usersData = {
 	showData(req, res){
 		let userFilter = "";
 
+
 		if(req.query.filter){
 			let user = req.query.filter;
 			userFilter = {
