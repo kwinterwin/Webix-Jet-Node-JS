@@ -11,7 +11,8 @@ export default class DataTable extends JetView{
 			editable:true,
 			editaction:"dblclick",
 			datafetch:10,
-			loadahead:30,
+			loadahead:15,
+			scroll:"y",
 			columns:[
 				{id:"FirstName", editor:"text", header: ["Name" ,{content:"serverFilter"}], sort:"server",fillspace:1},
 				{id:"LastName", editor:"text", header: ["Surname" ,{content:"serverFilter"}], sort:"server",fillspace:2},
