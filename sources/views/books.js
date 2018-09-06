@@ -4,8 +4,8 @@ import {books} from "models/books";
 import WindowEdit from "views/window";
 
 export default class DataTableBook extends JetView{
+
 	config(){
-	
 		let header =  { 
 			view: "toolbar",
 			name:"dataset A",
@@ -22,10 +22,12 @@ export default class DataTableBook extends JetView{
 					view: "button", 
 					label: "Refresh",
 					click:()=>{
-						this.$$("datatable").filterByAll();
-						this.$$("datatable").filter(()=>{
-							return 1;
-						});
+						this.$$("datatable").getFilter("Name").value = "";
+						this.$$("datatable").getFilter("Year").value = "";
+						this.$$("datatable").getFilter("Author").value = "";
+						this.$$("datatable").getFilter("Category").value = "";
+						this.$$("datatable").clearAll();
+						this.$$("datatable").sync(books);
 					}
 				}
 			]

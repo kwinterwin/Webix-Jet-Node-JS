@@ -5,6 +5,8 @@ import {books} from "models/books";
 export default class DataTable extends JetView{
 	config(){
 
+		var value = 1;
+
 		let datatable = {
 			view: "datatable",
 			localId:"datatable",
@@ -58,14 +60,12 @@ export default class DataTable extends JetView{
 					view: "button", 
 					label: "Refresh",
 					click:()=>{
-						this.$$("datatable").filterByAll();
 						this.$$("Category").setValue("");
 						this.$$("Year").setValue("");
 						this.$$("Name").setValue("");
 						this.$$("Author").setValue("");
-						this.$$("datatable").filter(()=>{
-							return 1;
-						});
+						this.$$("datatable").clearAll();
+						this.$$("datatable").sync(books);
 						
 					}
 				},
