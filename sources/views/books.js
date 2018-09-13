@@ -3,11 +3,12 @@ import {genres} from "models/genres";
 import {books} from "models/books";
 import WindowEdit from "views/window";
 
-export default class DataTable extends JetView{
+export default class DataTableBook extends JetView{
+
 	config(){
-	
 		let header =  { 
 			view: "toolbar",
+			name:"dataset A",
 			elements: [
 				{ view: "label", label: ""},
 				{
@@ -20,6 +21,14 @@ export default class DataTable extends JetView{
 				{
 					view: "button", 
 					label: "Refresh",
+					click:()=>{
+						this.$$("datatable").getFilter("Name").value = "";
+						this.$$("datatable").getFilter("Year").value = "";
+						this.$$("datatable").getFilter("Author").value = "";
+						this.$$("datatable").getFilter("Category").value = "";
+						this.$$("datatable").clearAll();
+						this.$$("datatable").sync(books);
+					}
 				}
 			]
 		};
@@ -33,7 +42,7 @@ export default class DataTable extends JetView{
 			columns:[
 				{id:"Name", header: ["Name" ,{content:"textFilter"}], sort:"string",fillspace:2},
 				{id:"Year", header: ["Year" ,{content:"numberFilter"}], sort:"int",fillspace:2},
-				{id:"Author", header: ["Some information" ,{content:"textFilter"}], sort:"string",fillspace:1},
+				{id:"Author", header: ["Author" ,{content:"textFilter"}], sort:"string",fillspace:1},
 				{id:"Category", header: ["Category" ,{content:"selectFilter"}], sort:"string", options:genres,fillspace:1},
 			],
 			on:{
