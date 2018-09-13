@@ -19,8 +19,8 @@ export default class DataTable extends JetView{
 				{id:"Phone", editor:"text", header: ["Phone" ,{content:"serverFilter"}], sort:"server",fillspace:2},
 				{id:"Job", editor:"text", header: ["Job" ,{content:"serverFilter"}], sort:"server",fillspace:1}
 			],
-			url:"http://localhost:3000/users",
-			save:"rest->http://localhost:3000/users/"
+			url:"/server/users",
+			save:"rest->/server/users/"
 		};
 		return datatable;
 	}

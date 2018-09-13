@@ -1,6 +1,5 @@
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-const cors = require("cors");
 const express = require("express");
 const books = require("./server/route/books");
 const users = require("./server/route/users");
@@ -15,21 +14,20 @@ let port = 3000;
 mongoose.connect("mongodb://localhost/task1DB");
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.use(cors());
 
-app.get("/books", books.showData);	
-app.put("/books/:id", books.saveData);
-app.delete("/books/:id", books.deleteData);
-app.post("/books", books.addData);
+app.get("/server/books", books.showData);	
+app.put("/server/books/:id", books.saveData);
+app.delete("/server/books/:id", books.deleteData);
+app.post("/server/books", books.addData);
 
-app.get("/users", users.showData);
-app.put("/users/:id", users.saveData);
+app.get("/server/users", users.showData);
+app.put("/server/users/:id", users.saveData);
 
 const fileUpload = require("express-fileupload");
 
 app.use(fileUpload());
  
-app.post("/files", function(req, res) {
+app.post("/server/files", function(req, res) {
 	let sampleFile = req.files.upload;
 	sampleFile.mv("./uploads/" + sampleFile.name, function(err) {
 		if (err)

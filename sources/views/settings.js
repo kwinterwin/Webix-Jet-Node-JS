@@ -4,9 +4,7 @@ import {books} from "models/books";
 
 export default class DataTable extends JetView{
 	config(){
-
-		var value = 1;
-
+		
 		let datatable = {
 			view: "datatable",
 			localId:"datatable",
@@ -94,7 +92,7 @@ export default class DataTable extends JetView{
 					multiple: false,
 					localId:"upload",
 					link:"mylist",
-					upload:"http://localhost:3000/files",
+					upload:"/server/files",
 					on:{
 						onAfterFileAdd:(upload)=>{
 							let reader = new FileReader(); 

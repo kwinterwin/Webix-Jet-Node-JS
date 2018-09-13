@@ -49,7 +49,12 @@ module.exports = function(env) {
 				APPNAME: `"${pack.name}"`,
 				PRODUCTION : production
 			})
-		]
+		],
+		devServer:{
+			proxy:{
+				"/server":"http://localhost:3000"
+			}
+		}
 	};
 
 	if (production) {
